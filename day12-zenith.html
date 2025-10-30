@@ -23,16 +23,6 @@
             --text-light: #666;
         }
         
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --purple-light: #4A2C5C;
-                --purple: #6B3D7A;
-                --blue-light: #2D4A5C;
-                --blue: #3D6B8A;
-                --text-dark: #E0E0E0;
-                --text-light: #B0B0B0;
-            }
-        }
         
         body {
             font-family: 'Poppins', sans-serif;
@@ -57,11 +47,6 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
         }
         
-        @media (prefers-color-scheme: dark) {
-            .container {
-                background: rgba(30, 30, 40, 0.95);
-            }
-        }
         
         .countdown {
             text-align: center;
@@ -196,7 +181,35 @@
             margin-bottom: 25px;
             text-align: center;
             display: none;
-            animation: bounceIn 0.6s ease-out;
+            animation: epicReveal 1.5s ease-out;
+        }
+        
+        @keyframes epicReveal {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) rotateY(180deg);
+            }
+            50% {
+                transform: scale(1.2) rotateY(0deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotateY(0deg);
+            }
+        }
+        
+        .epic-loader {
+            display: none;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: #6B3D7A;
+            margin: 20px 0;
+            animation: pulse 0.8s infinite;
+        }
+        
+        .epic-loader.show {
+            display: block;
         }
         
         @keyframes bounceIn {
@@ -217,7 +230,7 @@
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 10px;
-            color: var(--purple);
+            color: #6B3D7A;
         }
         
         .prize-subtitle {
@@ -418,14 +431,68 @@
             }
             
             if (allAnswered) {
-                // Any answer is accepted
-                document.getElementById('prizeSection').style.display = 'block';
-                document.querySelector('.submit-btn').textContent = '🎉 Completed! 🎉';
-                document.querySelector('.submit-btn').disabled = true;
+                const submitBtn = document.querySelector('.submit-btn');
+                const prizeSection = document.getElementById('prizeSection');
+                
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Processing...';
+                
+                // Create epic loading message
+                const loader = document.createElement('div');
+                loader.className = 'epic-loader show';
+                loader.textContent = '✨ Preparing your grand prize... ✨';
+                submitBtn.parentNode.insertBefore(loader, submitBtn.nextSibling);
+                
+                // Wait 3 seconds before revealing
+                setTimeout(() => {
+                    loader.textContent = '🎊 HERE IT COMES! 🎊';
+                    setTimeout(() => {
+                        loader.remove();
+                        prizeSection.style.display = 'block';
+                        submitBtn.textContent = '🎉 Completed! 🎉';
+                        
+                        // Create confetti effect
+                        createEpicConfetti();
+                    }, 1000);
+                }, 3000);
             } else {
                 alert('Please answer all questions before submitting!');
             }
         }
+        
+        function createEpicConfetti() {
+            const colors = ['#E6D5F5', '#D4B5E8', '#7CB9E8', '#A7D3F0', '#FFB6C1', '#FFD700'];
+            const container = document.body;
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'fixed';
+                confetti.style.width = '10px';
+                confetti.style.height = '10px';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = '-10px';
+                confetti.style.borderRadius = '50%';
+                confetti.style.pointerEvents = 'none';
+                confetti.style.zIndex = '9999';
+                confetti.style.animation = `confettiFall ${2 + Math.random() * 2}s linear forwards`;
+                container.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 5000);
+            }
+        }
+        
+        // Add confetti animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes confettiFall {
+                to {
+                    transform: translateY(100vh) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
