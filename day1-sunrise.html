@@ -23,16 +23,6 @@
             --text-light: #666;
         }
         
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --purple-light: #4A2C5C;
-                --purple: #6B3D7A;
-                --blue-light: #2D4A5C;
-                --blue: #3D6B8A;
-                --text-dark: #E0E0E0;
-                --text-light: #B0B0B0;
-            }
-        }
         
         body {
             font-family: 'Poppins', sans-serif;
@@ -57,11 +47,6 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
         }
         
-        @media (prefers-color-scheme: dark) {
-            .container {
-                background: rgba(30, 30, 40, 0.95);
-            }
-        }
         
         .countdown {
             text-align: center;
@@ -180,7 +165,7 @@
         
         .content-text h3 {
             margin: 20px 0 10px;
-            color: var(--purple);
+            color: #6B3D7A;
             font-size: 18px;
         }
         
@@ -237,7 +222,7 @@
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 10px;
-            color: var(--purple);
+            color: #6B3D7A;
         }
         
         .prize-subtitle {
@@ -359,9 +344,11 @@
                     <p>Welcome to your birthday countdown amor! 🥰 For the next 14 days, you'll unlock surprises, complete fun challenges, and discover how much you mean to me and how much I love you. Let's begin this adventure together! ✨</p>
                     
                     <h3>💜 3 Reasons I'm Grateful You Exist 💜</h3>
-                    <p>You're beautiful and I love seeing you</p>
-                    <p>We love each other very much</p>
-                    <p>You are God's gift to me (you will unlock many gifts these days)</p>
+                    <ol style="text-align: left; display: inline-block;">
+                        <li>You're beautiful and I love seeing you</li>
+                        <li>We love each other very much</li>
+                        <li>You are God's gift to me (you will unlock many gifts these days)</li>
+                    </ol>
                 </div>
             </div>
         </div>

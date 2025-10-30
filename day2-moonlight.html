@@ -25,16 +25,6 @@
             --error: #f44336;
         }
         
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --purple-light: #4A2C5C;
-                --purple: #6B3D7A;
-                --blue-light: #2D4A5C;
-                --blue: #3D6B8A;
-                --text-dark: #E0E0E0;
-                --text-light: #B0B0B0;
-            }
-        }
         
         body {
             font-family: 'Poppins', sans-serif;
@@ -59,11 +49,6 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
         }
         
-        @media (prefers-color-scheme: dark) {
-            .container {
-                background: rgba(30, 30, 40, 0.95);
-            }
-        }
         
         .countdown {
             text-align: center;
@@ -161,7 +146,7 @@
             width: 100%;
             padding: 15px;
             margin-bottom: 10px;
-            background: rgba(0, 0, 0, 0.03);
+            background: white;
             border: 2px solid transparent;
             border-radius: 10px;
             cursor: pointer;
@@ -169,16 +154,17 @@
             font-size: 15px;
             transition: all 0.2s;
             text-align: left;
+            color: var(--text-dark);
         }
         
         .option:hover {
             background: rgba(212, 181, 232, 0.2);
-            border-color: var(--purple);
+            border-color: #6B3D7A;
         }
         
         .option.selected {
             background: linear-gradient(135deg, var(--purple-light) 0%, var(--blue-light) 100%);
-            border-color: var(--purple);
+            border-color: #6B3D7A;
             font-weight: 600;
         }
         
@@ -261,7 +247,7 @@
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 10px;
-            color: var(--purple);
+            color: #6B3D7A;
         }
         
         .prize-subtitle {
@@ -470,21 +456,16 @@
                 }, 1500);
             } else {
                 selected.classList.add('incorrect');
-                feedback.textContent = 'Not quite, but you\'re amazing! 💜';
+                feedback.textContent = 'Not quite! Please try again\'re amazing! 💜';
                 feedback.classList.add('incorrect', 'show');
                 
-                // Still show correct answer
-                const correct = Array.from(options).find(opt => 
-                    opt.textContent.trim().startsWith(correctAnswers[questionNum] + ')'));
-                correct.classList.add('correct');
-                
+                // Re-enable options so they can try again
                 setTimeout(() => {
-                    if (questionNum < 3) {
-                        question.style.display = 'none';
-                        document.getElementById(`question${questionNum + 1}`).style.display = 'block';
-                    } else {
-                        showPrize();
-                    }
+                    options.forEach(opt => {
+                        opt.disabled = false;
+                        opt.classList.remove('selected', 'correct', 'incorrect');
+                    });
+                    feedback.classList.remove('show');
                 }, 2000);
             }
         }
