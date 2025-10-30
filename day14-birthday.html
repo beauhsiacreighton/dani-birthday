@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎉 HAPPY BIRTHDAY! 🎉 | Birthday Countdown</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --purple-light: #E6D5F5;
+            --purple: #D4B5E8;
+            --blue-light: #A7D3F0;
+            --blue: #7CB9E8;
+            --text-dark: #333;
+            --text-light: #666;
+            --gold: #FFD700;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --purple-light: #4A2C5C;
+                --purple: #6B3D7A;
+                --blue-light: #2D4A5C;
+                --blue: #3D6B8A;
+                --text-dark: #E0E0E0;
+                --text-light: #B0B0B0;
+            }
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--purple-light) 0%, var(--blue-light) 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text-dark);
+            animation: fadeIn 0.5s ease-in;
+            overflow-x: hidden;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .container {
+                background: rgba(30, 30, 40, 0.95);
+            }
+        }
+        
+        .birthday-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(212, 181, 232, 0.3) 0%, rgba(167, 211, 240, 0.3) 100%);
+            border-radius: 15px;
+        }
+        
+        .birthday-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--purple) 0%, var(--blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: bounce 1s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .birthday-name {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--purple);
+            margin-bottom: 20px;
+        }
+        
+        .celebration-message {
+            line-height: 1.8;
+            font-size: 16px;
+            margin-bottom: 30px;
+            text-align: center;
+            padding: 20px;
+            background: rgba(212, 181, 232, 0.1);
+            border-radius: 15px;
+        }
+        
+        .prize-gallery {
+            margin-bottom: 30px;
+        }
+        
+        .gallery-title {
+            font-size: 20px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--purple);
+        }
+        
+        .prize-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .prize-card {
+            aspect-ratio: 1;
+            background: rgba(212, 181, 232, 0.1);
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--purple-light);
+            transition: transform 0.2s;
+        }
+        
+        .prize-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .prize-card-image {
+            width: 100%;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 5px;
+        }
+        
+        .prize-card-title {
+            font-size: 10px;
+            text-align: center;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+        
+        .epic-button {
+            width: 100%;
+            padding: 25px;
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg, var(--purple) 0%, var(--blue) 100%);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s infinite;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); }
+            50% { transform: scale(1.05); box-shadow: 0 12px 40px rgba(212, 181, 232, 0.6); }
+        }
+        
+        .epic-button:hover, .epic-button:active {
+            transform: scale(1.08);
+        }
+        
+        .epic-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        .bonus-reveal {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(212, 181, 232, 0.2) 100%);
+            border-radius: 20px;
+            margin-bottom: 25px;
+            animation: bounceIn 0.6s ease-out;
+        }
+        
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .bonus-reveal.show {
+            display: block;
+        }
+        
+        .bonus-amount {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--gold);
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .bonus-text {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .bonus-instruction {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-top: 15px;
+        }
+        
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: particleFloat 5s linear forwards;
+        }
+        
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        
+        .heart-particle {
+            font-size: 20px;
+            animation: heartFloat 4s linear forwards;
+        }
+        
+        @keyframes heartFloat {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .star-particle {
+            font-size: 16px;
+            animation: starFloat 6s linear forwards;
+        }
+        
+        @keyframes starFloat {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(1080deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="birthday-header">
+            <div class="birthday-title">🎂 HAPPY BIRTHDAY! 🎂</div>
+            <div class="birthday-name">[Her Name]</div>
+        </div>
+        
+        <div class="celebration-message">
+            <p>Happy Birthday to the most incredible girlfriend in the world! You've completed every challenge, unlocked every prize, and made these 14 days unforgettable. I'm so blessed and fortunate to celebrate you today and every day. You deserve all my love and gifts. I'm so proud of you and happy for you 💜</p>
+        </div>
+        
+        <div class="prize-gallery">
+            <div class="gallery-title">🏆 YOUR PRIZE COLLECTION 🏆</div>
+            <div class="prize-grid">
+                <div class="prize-card">
+                    <img src="./images/day1-wallpaper.jpg" alt="Day 1 Wallpaper" class="prize-card-image" onerror="this.style.display='none';">
+                    <div class="prize-card-title">Day 1 Wallpaper</div>
+                </div>
+                <div class="prize-card">
+                    <img src="./images/prize-phone-holder.jpg" alt="Phone Holder" class="prize-card-image" onerror="this.style.display='none';">
+                    <div class="prize-card-title">Phone Holder</div>
+                </div>
+                <div class="prize-card">
+                    <img src="./images/day3-wallpaper.jpg" alt="Day 3 Wallpaper" class="prize-card-image" onerror="this.style.display='none';">
+                    <div class="prize-card-title">Day 3 Wallpaper</div>
+                </div>
+                <div class="prize-card">
+                    <img src="./images/prize-magnesium.jpg" alt="Magnesium" class="prize-card-image" onerror="this.style.display='none';">
+                    <div class="prize-card-title">Magnesium</div>
+                </div>
+                <div class="prize-card">
+                    <img src="./images/day5-vision-board.jpg" alt="Vision Board" class="prize-card-image" onerror="this.style.display='none';">
+                    <div class="prize-card-title">Vision Board</div>
+                </div>
+                <div class="prize-card">
+                    <img src="./images/prize-exercise-bands.jpg" alt="Exercise Bands" class="prize-card-image" onerror="this.style.display='none';">
+                    <div class="prize-card-title">Exercise Bands</div>
+                </div>
+                <div class="prize-card">
+                    <img src="./images/prize-laptop-stand.jpg" alt="Laptop Stand" class="prize-card-image" onerror="this.style.display='none';">
+                    <div class="prize-card-title">Laptop Stand</div>
+                </div>
+                <div class="prize-card">
+                    <img src="./images/day8-wallpaper.jpg" alt="Day 8 Wallpaper" class="prize-card-image" onerror="this.style.display='none';">
+                    <div class="prize-card-title">Day 8 Wallpaper</div>
+                </div>
+                <div class="prize-card">
+                    <img src="./images/prize-love-letter.jpg" alt="Love Letter" class="prize-card-image" onerror="this.style.display='none';">
+                    <div class="prize-card-title">Love Letter</div>
+                </div>
+                <div class="prize-card">
+                    <img src="./images/prize-cushion.jpg" alt="Cushion" class="prize-card-image" onerror="this.style.display='none';">
+                    <div class="prize-card-title">Cushion</div>
+                </div>
+                <div class="prize-card">
+                    <img src="./images/prize-roses.jpg" alt="Roses" class="prize-card-image" onerror="this.style.display='none';">
+                    <div class="prize-card-title">Roses</div>
+                </div>
+                <div class="prize-card">
+                    <img src="./images/prize-roses-2.jpg" alt="Rose Delivery" class="prize-card-image" onerror="this.style.display='none';">
+                    <div class="prize-card-title">Rose Delivery</div>
+                </div>
+                <div class="prize-card">
+                    <img src="./images/day13-special.jpg" alt="Day 13 Special" class="prize-card-image" onerror="this.style.display='none';">
+                    <div class="prize-card-title">Day 13 Special</div>
+                </div>
+            </div>
+        </div>
+        
+        <button class="epic-button" id="epicButton" onclick="revealBonus()">
+            🎁 CLAIM YOUR FINAL<br>BIRTHDAY BONUS 🎁<br>
+            <span style="font-size: 16px;">Click to reveal</span>
+        </button>
+        
+        <div class="bonus-reveal" id="bonusReveal">
+            <div class="bonus-amount">💰 1500 PESOS 💰</div>
+            <div class="bonus-text">UNLOCKED!</div>
+            <div class="bonus-instruction">Show this to [your name] to claim! 🎊</div>
+        </div>
+    </div>
+    
+    <div class="particles-container" id="particlesContainer"></div>
+    
+    <script>
+        function createParticles() {
+            const container = document.getElementById('particlesContainer');
+            const colors = ['#FFD700', '#E6D5F5', '#D4B5E8', '#7CB9E8', '#A7D3F0'];
+            const symbols = ['💜', '💛', '✨', '⭐', '💖'];
+            
+            // Create 200+ particles
+            for (let i = 0; i < 250; i++) {
+                const particle = document.createElement('div');
+                const rand = Math.random();
+                
+                if (rand < 0.4) {
+                    // Heart particles
+                    particle.className = 'particle heart-particle';
+                    particle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                    particle.style.fontSize = (15 + Math.random() * 15) + 'px';
+                } else if (rand < 0.7) {
+                    // Star particles
+                    particle.className = 'particle star-particle';
+                    particle.textContent = '⭐';
+                    particle.style.fontSize = (12 + Math.random() * 10) + 'px';
+                } else {
+                    // Regular particles
+                    particle.className = 'particle';
+                    particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.width = (8 + Math.random() * 8) + 'px';
+                    particle.style.height = particle.style.width;
+                }
+                
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = (100 + Math.random() * 20) + '%';
+                particle.style.animationDelay = Math.random() * 2 + 's';
+                particle.style.animationDuration = (3 + Math.random() * 4) + 's';
+                
+                container.appendChild(particle);
+                
+                setTimeout(() => particle.remove(), 7000);
+            }
+        }
+        
+        function revealBonus() {
+            const button = document.getElementById('epicButton');
+            const reveal = document.getElementById('bonusReveal');
+            
+            button.disabled = true;
+            button.style.display = 'none';
+            
+            createParticles();
+            
+            setTimeout(() => {
+                reveal.classList.add('show');
+            }, 2000);
+        }
+        
+        // Auto-start some particles on page load
+        setTimeout(() => {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const container = document.getElementById('particlesContainer');
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.background = ['#FFD700', '#E6D5F5', '#D4B5E8'][Math.floor(Math.random() * 3)];
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.top = '100%';
+                    particle.style.animationDuration = (2 + Math.random() * 3) + 's';
+                    container.appendChild(particle);
+                    setTimeout(() => particle.remove(), 5000);
+                }, i * 100);
+            }
+        }, 500);
+    </script>
+</body>
+</html>

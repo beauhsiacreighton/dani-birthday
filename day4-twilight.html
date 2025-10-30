@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 4 - Riddle Me This | Birthday Countdown</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --purple-light: #E6D5F5;
+            --purple: #D4B5E8;
+            --blue-light: #A7D3F0;
+            --blue: #7CB9E8;
+            --text-dark: #333;
+            --text-light: #666;
+            --success: #4CAF50;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --purple-light: #4A2C5C;
+                --purple: #6B3D7A;
+                --blue-light: #2D4A5C;
+                --blue: #3D6B8A;
+                --text-dark: #E0E0E0;
+                --text-light: #B0B0B0;
+            }
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--purple-light) 0%, var(--blue-light) 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text-dark);
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .container {
+                background: rgba(30, 30, 40, 0.95);
+            }
+        }
+        
+        .countdown {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .countdown-title {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .countdown-timer {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--purple) 0%, var(--blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        .day-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .day-number {
+            font-size: 16px;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+        
+        .day-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .day-subtitle {
+            font-size: 18px;
+            color: var(--text-light);
+            font-style: italic;
+        }
+        
+        .progress-bar-container {
+            margin-bottom: 25px;
+        }
+        
+        .progress-label {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--purple) 0%, var(--blue) 100%);
+            border-radius: 10px;
+            width: 28.57%;
+            transition: width 0.3s ease;
+        }
+        
+        .riddle-container {
+            margin-bottom: 25px;
+        }
+        
+        .riddle-text {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: rgba(212, 181, 232, 0.1);
+            border-radius: 15px;
+            font-style: italic;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .answer-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid var(--purple-light);
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            transition: border-color 0.2s;
+        }
+        
+        .answer-input:focus {
+            outline: none;
+            border-color: var(--purple);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(135deg, var(--purple) 0%, var(--blue) 100%);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: transform 0.2s;
+        }
+        
+        .submit-btn:hover {
+            transform: scale(1.02);
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 16px;
+            display: none;
+        }
+        
+        .feedback.show {
+            display: block;
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        .feedback.correct {
+            background: rgba(76, 175, 80, 0.2);
+            color: var(--success);
+        }
+        
+        .feedback.incorrect {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hint {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(255, 193, 7, 0.1);
+            border-radius: 10px;
+            font-size: 14px;
+            color: var(--text-light);
+            display: none;
+        }
+        
+        .hint.show {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+        
+        .prize-section {
+            background: linear-gradient(135deg, rgba(212, 181, 232, 0.2) 0%, rgba(167, 211, 240, 0.2) 100%);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+            display: none;
+            animation: bounceIn 0.6s ease-out;
+        }
+        
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .prize-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--purple);
+        }
+        
+        .prize-subtitle {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+        
+        .prize-image {
+            width: 100%;
+            max-width: 250px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 0 auto;
+            display: block;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-top: 20px;
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 500;
+            background: rgba(0, 0, 0, 0.05);
+        }
+        
+        .calendar-day.completed {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--blue) 100%);
+            color: white;
+        }
+        
+        .calendar-day.current {
+            background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
+            color: white;
+            animation: pulse 2s infinite;
+            font-weight: 600;
+        }
+        
+        .calendar-day.locked {
+            background: rgba(0, 0, 0, 0.1);
+            color: var(--text-light);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="countdown">
+            <div class="countdown-title">⏰ Countdown to Your Birthday</div>
+            <div class="countdown-timer" id="countdown">--:--:--</div>
+        </div>
+        
+        <div class="day-header">
+            <div class="day-number">Day 4 of 14</div>
+            <div class="day-title">Riddle Me This</div>
+            <div class="day-subtitle">🧩</div>
+        </div>
+        
+        <div class="progress-bar-container">
+            <div class="progress-label">Progress: 4 / 14 days</div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+        
+        <div class="riddle-container">
+            <div class="riddle-text">
+                Riddle: "I am taken from a mine and shut up in a wooden case, from which I am never released, and yet I am used by almost every person. What am I? (give scientific name)"
+            </div>
+            
+            <div class="input-group">
+                <input type="text" class="answer-input" id="answerInput" placeholder="Type your answer here...">
+            </div>
+            
+            <button class="submit-btn" onclick="checkAnswer()">Submit Answer</button>
+            
+            <div class="feedback" id="feedback"></div>
+            
+            <div class="hint" id="hint1">
+                💡 Hint 1: "we've solved this riddle together before"
+            </div>
+            
+            <div class="hint" id="hint2">
+                💡 Hint 2: "it's something your students probably use"
+            </div>
+        </div>
+        
+        <div class="prize-section" id="prizeSection">
+            <div class="prize-title">🌟 Wellness Gift Unlocked</div>
+            <div class="prize-subtitle">Something to help you feel your best every day</div>
+            <img src="./images/prize-magnesium.jpg" alt="Magnesium Supplements" class="prize-image" 
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <div style="display:none; padding: 20px; background: rgba(0,0,0,0.05); border-radius: 10px; margin-top: 10px;">
+                <p style="font-size: 12px; color: var(--text-light);">Upload image to: /images/prize-magnesium.jpg</p>
+            </div>
+        </div>
+        
+        <div class="calendar-grid">
+            <div class="calendar-day completed">✓</div>
+            <div class="calendar-day completed">✓</div>
+            <div class="calendar-day completed">✓</div>
+            <div class="calendar-day completed">✓</div>
+            <div class="calendar-day current">4</div>
+            <div class="calendar-day locked">🔒</div>
+            <div class="calendar-day locked">🔒</div>
+            <div class="calendar-day locked">🔒</div>
+            <div class="calendar-day locked">🔒</div>
+            <div class="calendar-day locked">🔒</div>
+            <div class="calendar-day locked">🔒</div>
+            <div class="calendar-day locked">🔒</div>
+            <div class="calendar-day locked">🔒</div>
+            <div class="calendar-day locked">🔒</div>
+        </div>
+    </div>
+    
+    <script>
+        const targetDate = new Date('2025-11-13T00:00:00-06:00');
+        const correctAnswer = 'graphite';
+        let wrongAttempts = 0;
+        
+        function updateCountdown() {
+            const now = new Date();
+            const diff = targetDate - now;
+            
+            if (diff <= 0) {
+                document.getElementById('countdown').textContent = '🎉 IT\'S YOUR BIRTHDAY! 🎉';
+                return;
+            }
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            if (days > 0) {
+                document.getElementById('countdown').textContent = 
+                    `${days} days, ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            } else {
+                document.getElementById('countdown').textContent = 
+                    `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            }
+        }
+        
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+        
+        document.getElementById('answerInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkAnswer();
+            }
+        });
+        
+        function checkAnswer() {
+            const input = document.getElementById('answerInput');
+            const feedback = document.getElementById('feedback');
+            const submitBtn = document.querySelector('.submit-btn');
+            const answer = input.value.trim().toLowerCase();
+            
+            if (answer === correctAnswer.toLowerCase()) {
+                feedback.textContent = '🎉 Correct! You\'re so smart! 🎉';
+                feedback.classList.add('correct', 'show');
+                input.disabled = true;
+                submitBtn.disabled = true;
+                
+                setTimeout(() => {
+                    document.getElementById('prizeSection').style.display = 'block';
+                }, 1000);
+            } else {
+                wrongAttempts++;
+                feedback.textContent = 'Not quite! Try again 💜';
+                feedback.classList.add('incorrect', 'show');
+                
+                if (wrongAttempts >= 2) {
+                    document.getElementById('hint1').classList.add('show');
+                }
+                if (wrongAttempts >= 3) {
+                    document.getElementById('hint2').classList.add('show');
+                }
+            }
+        }
+    </script>
+</body>
+</html>

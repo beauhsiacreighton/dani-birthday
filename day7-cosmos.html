@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 7 - HALFWAY MILESTONE! | Birthday Countdown</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --purple-light: #E6D5F5;
+            --purple: #D4B5E8;
+            --blue-light: #A7D3F0;
+            --blue: #7CB9E8;
+            --text-dark: #333;
+            --text-light: #666;
+            --success: #4CAF50;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --purple-light: #4A2C5C;
+                --purple: #6B3D7A;
+                --blue-light: #2D4A5C;
+                --blue: #3D6B8A;
+                --text-dark: #E0E0E0;
+                --text-light: #B0B0B0;
+            }
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--purple-light) 0%, var(--blue-light) 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text-dark);
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .container {
+                background: rgba(30, 30, 40, 0.95);
+            }
+        }
+        
+        .countdown {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .countdown-title {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .countdown-timer {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--purple) 0%, var(--blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        .day-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .day-number {
+            font-size: 16px;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+        
+        .day-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .day-subtitle {
+            font-size: 18px;
+            color: var(--text-light);
+            font-style: italic;
+        }
+        
+        .progress-bar-container {
+            margin-bottom: 25px;
+        }
+        
+        .progress-label {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--purple) 0%, var(--blue) 100%);
+            border-radius: 10px;
+            width: 50%;
+            transition: width 0.3s ease;
+        }
+        
+        .challenge-part {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(212, 181, 232, 0.1);
+            border-radius: 15px;
+            display: none;
+        }
+        
+        .challenge-part.active {
+            display: block;
+            animation: slideUp 0.5s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .part-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--purple);
+        }
+        
+        .challenge-image {
+            width: 100%;
+            max-width: 300px;
+            height: 300px;
+            object-fit: contain;
+            border-radius: 10px;
+            margin: 15px auto;
+            display: block;
+            background: rgba(0, 0, 0, 0.05);
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .answer-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid var(--purple-light);
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(135deg, var(--purple) 0%, var(--blue) 100%);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .morse-code {
+            font-family: monospace;
+            font-size: 24px;
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+            margin: 15px 0;
+            letter-spacing: 5px;
+        }
+        
+        .text-area {
+            width: 100%;
+            min-height: 100px;
+            padding: 15px;
+            font-size: 15px;
+            border: 2px solid var(--purple-light);
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            resize: vertical;
+        }
+        
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 16px;
+            display: none;
+        }
+        
+        .feedback.show {
+            display: block;
+        }
+        
+        .feedback.correct {
+            background: rgba(76, 175, 80, 0.2);
+            color: var(--success);
+        }
+        
+        .celebration-section {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(212, 181, 232, 0.2) 0%, rgba(167, 211, 240, 0.2) 100%);
+            border-radius: 15px;
+            margin-bottom: 25px;
+            animation: bounceIn 0.6s ease-out;
+        }
+        
+        .celebration-section.show {
+            display: block;
+        }
+        
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .celebration-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--purple) 0%, var(--blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .prize-section {
+            background: linear-gradient(135deg, rgba(212, 181, 232, 0.2) 0%, rgba(167, 211, 240, 0.2) 100%);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+            display: none;
+            animation: bounceIn 0.6s ease-out;
+        }
+        
+        .prize-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--purple);
+        }
+        
+        .prize-subtitle {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+        
+        .prize-image {
+            width: 100%;
+            max-width: 250px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 0 auto;
+            display: block;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-top: 20px;
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 500;
+            background: rgba(0, 0, 0, 0.05);
+        }
+        
+        .calendar-day.completed {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--blue) 100%);
+            color: white;
+        }
+        
+        .calendar-day.current {
+            background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
+            color: white;
+            animation: pulse 2s infinite;
+            font-weight: 600;
+        }
+        
+        .calendar-day.locked {
+            background: rgba(0, 0, 0, 0.1);
+            color: var(--text-light);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="countdown">
+            <div class="countdown-title">⏰ Countdown to Your Birthday</div>
+            <div class="countdown-timer" id="countdown">--:--:--</div>
+        </div>
+        
+        <div class="day-header">
+            <div class="day-number">Day 7 of 14</div>
+            <div class="day-title">HALFWAY MILESTONE!</div>
+            <div class="day-subtitle">🎊</div>
+        </div>
+        
+        <div class="progress-bar-container">
+            <div class="progress-label">Progress: 7 / 14 days</div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+        
+        <div class="challenge-part active" id="part1">
+            <div class="part-title">Part 1: Hidden Objects</div>
+            <p style="margin-bottom: 15px;">How many dark red roses are in this image?</p>
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgLA68z8vIA6TlXfffrLTdWSmgLtsLU-nahS0eavcUuLd1KvsXAhQTmI2Vm-8U8CqMVGr0TUJMqTDPG9XLVsGDl0LxxO5lpTqMzat5vZbFyB1ix2nSDuvGBDVapQ6uXLrzM5BWPwAUXRJ0TPO6bpM_2XrkgLlDo27YP5Km_xqwbD0zA_CobcSu8cR03MQ/w400-h400/valen2023.png" alt="Roses Image" class="challenge-image" onerror="this.style.display='none';">
+            <div class="input-group">
+                <input type="number" class="answer-input" id="part1Answer" placeholder="Enter number of roses...">
+            </div>
+            <button class="submit-btn" onclick="checkPart1()">Submit</button>
+            <div class="feedback" id="feedback1"></div>
+        </div>
+        
+        <div class="challenge-part" id="part2">
+            <div class="part-title">Part 2: Morse Code</div>
+            <p style="margin-bottom: 15px;">What does this say?</p>
+            <div class="morse-code">.-.. --- ...- . / ..-. --- .-. . ...- . .-.</div>
+            <div class="input-group">
+                <input type="text" class="answer-input" id="part2Answer" placeholder="Type your answer...">
+            </div>
+            <button class="submit-btn" onclick="checkPart2()">Submit</button>
+            <div class="feedback" id="feedback2"></div>
+        </div>
+        
+        <div class="challenge-part" id="part3">
+            <div class="part-title">Part 3: Open Your Heart</div>
+            <p style="margin-bottom: 15px;">What do you love most about us?</p>
+            <textarea class="text-area" id="part3Answer" placeholder="Share your thoughts..."></textarea>
+            <button class="submit-btn" onclick="checkPart3()">Submit</button>
+            <div class="feedback" id="feedback3"></div>
+        </div>
+        
+        <div class="celebration-section" id="celebration">
+            <div class="celebration-title">🎊 HALFWAY THERE! 🎊</div>
+            <p style="margin-bottom: 15px; line-height: 1.8;">You've made it halfway! These past 7 days have been amazing, and the best is yet to come. You've unlocked incredible prizes and proven how special you are. Only 7 more days until your big day!!</p>
+            <div style="background: rgba(0,0,0,0.05); padding: 15px; border-radius: 10px; margin-top: 15px;">
+                <p style="font-weight: 600; margin-bottom: 10px;">Progress Summary:</p>
+                <p>✓ 7 days completed</p>
+                <p>✓ 7 prizes unlocked</p>
+                <p>→ 7 days to go!</p>
+            </div>
+        </div>
+        
+        <div class="prize-section" id="prizeSection">
+            <div class="prize-title">💝 PREMIUM GIFT UNLOCKED</div>
+            <div class="prize-subtitle">Your workspace is about to level up</div>
+            <img src="./images/prize-laptop-stand.jpg" alt="Laptop Stand" class="prize-image" 
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <div style="display:none; padding: 20px; background: rgba(0,0,0,0.05); border-radius: 10px; margin-top: 10px;">
+                <p style="font-size: 12px; color: var(--text-light);">Upload image to: /images/prize-laptop-stand.jpg</p>
+            </div>
+        </div>
+        
+        <div class="calendar-grid">
+            <div class="calendar-day completed">✓</div>
+            <div class="calendar-day completed">✓</div>
+            <div class="calendar-day completed">✓</div>
+            <div class="calendar-day completed">✓</div>
+            <div class="calendar-day completed">✓</div>
+            <div class="calendar-day completed">✓</div>
+            <div class="calendar-day completed">✓</div>
+            <div class="calendar-day current">7</div>
+            <div class="calendar-day locked">🔒</div>
+            <div class="calendar-day locked">🔒</div>
+            <div class="calendar-day locked">🔒</div>
+            <div class="calendar-day locked">🔒</div>
+            <div class="calendar-day locked">🔒</div>
+            <div class="calendar-day locked">🔒</div>
+        </div>
+    </div>
+    
+    <script>
+        const targetDate = new Date('2025-11-13T00:00:00-06:00');
+        let currentPart = 1;
+        
+        function updateCountdown() {
+            const now = new Date();
+            const diff = targetDate - now;
+            
+            if (diff <= 0) {
+                document.getElementById('countdown').textContent = '🎉 IT\'S YOUR BIRTHDAY! 🎉';
+                return;
+            }
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            if (days > 0) {
+                document.getElementById('countdown').textContent = 
+                    `${days} days, ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            } else {
+                document.getElementById('countdown').textContent = 
+                    `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            }
+        }
+        
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+        
+        function checkPart1() {
+            const answer = parseInt(document.getElementById('part1Answer').value);
+            const feedback = document.getElementById('feedback1');
+            
+            if (answer === 33) {
+                feedback.textContent = '🎉 Correct! 🎉';
+                feedback.classList.add('correct', 'show');
+                setTimeout(() => {
+                    document.getElementById('part1').classList.remove('active');
+                    document.getElementById('part2').classList.add('active');
+                }, 1000);
+            } else {
+                feedback.textContent = 'Not quite! Try again 💜';
+                feedback.classList.add('show');
+            }
+        }
+        
+        function checkPart2() {
+            const answer = document.getElementById('part2Answer').value.trim().toLowerCase();
+            const feedback = document.getElementById('feedback2');
+            
+            if (answer === 'love forever') {
+                feedback.textContent = '🎉 Correct! 🎉';
+                feedback.classList.add('correct', 'show');
+                setTimeout(() => {
+                    document.getElementById('part2').classList.remove('active');
+                    document.getElementById('part3').classList.add('active');
+                }, 1000);
+            } else {
+                feedback.textContent = 'Not quite! Try again 💜';
+                feedback.classList.add('show');
+            }
+        }
+        
+        function checkPart3() {
+            const answer = document.getElementById('part3Answer').value.trim();
+            const feedback = document.getElementById('feedback3');
+            
+            if (answer.length > 0) {
+                feedback.textContent = '💜 Thank you for sharing! 💜';
+                feedback.classList.add('correct', 'show');
+                setTimeout(() => {
+                    document.getElementById('celebration').classList.add('show');
+                    setTimeout(() => {
+                        document.getElementById('prizeSection').style.display = 'block';
+                    }, 1500);
+                }, 1000);
+            } else {
+                feedback.textContent = 'Please share something 💜';
+                feedback.classList.add('show');
+            }
+        }
+    </script>
+</body>
+</html>

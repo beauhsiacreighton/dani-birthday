@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 13 - Tomorrow... | Birthday Countdown</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --purple-light: #E6D5F5;
+            --purple: #D4B5E8;
+            --blue-light: #A7D3F0;
+            --blue: #7CB9E8;
+            --text-dark: #333;
+            --text-light: #666;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --purple-light: #4A2C5C;
+                --purple: #6B3D7A;
+                --blue-light: #2D4A5C;
+                --blue: #3D6B8A;
+                --text-dark: #E0E0E0;
+                --text-light: #B0B0B0;
+            }
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--purple-light) 0%, var(--blue-light) 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text-dark);
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .container {
+                background: rgba(30, 30, 40, 0.95);
+            }
+        }
+        
+        .countdown {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .countdown-title {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .countdown-timer {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--purple) 0%, var(--blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        .day-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .day-number {
+            font-size: 16px;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+        
+        .day-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .day-subtitle {
+            font-size: 18px;
+            color: var(--text-light);
+            font-style: italic;
+        }
+        
+        .progress-bar-container {
+            margin-bottom: 25px;
+        }
+        
+        .progress-label {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--purple) 0%, var(--blue) 100%);
+            border-radius: 10px;
+            width: 92.85%;
+            transition: width 0.3s ease;
+        }
+        
+        .content-area {
+            margin-bottom: 25px;
+            text-align: center;
+            line-height: 1.8;
+            font-size: 16px;
+            padding: 20px;
+            background: rgba(212, 181, 232, 0.1);
+            border-radius: 15px;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .summary-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 15px;
+        }
+        
+        .summary-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--purple);
+        }
+        
+        .prize-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .prize-thumb {
+            aspect-ratio: 1;
+            background: rgba(212, 181, 232, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        
+        .prize-section {
+            background: linear-gradient(135deg, rgba(212, 181, 232, 0.2) 0%, rgba(167, 211, 240, 0.2) 100%);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+            animation: bounceIn 0.6s ease-out;
+        }
+        
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .prize-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--purple);
+        }
+        
+        .prize-subtitle {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+        
+        .prize-image {
+            width: 100%;
+            max-width: 250px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 0 auto;
+            display: block;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-top: 20px;
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 500;
+            background: rgba(0, 0, 0, 0.05);
+        }
+        
+        .calendar-day.completed {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--blue) 100%);
+            color: white;
+        }
+        
+        .calendar-day.current {
+            background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
+            color: white;
+            animation: pulse 2s infinite;
+            font-weight: 600;
+        }
+        
+        .calendar-day.locked {
+            background: rgba(0, 0, 0, 0.1);
+            color: var(--text-light);
+        }
+        
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--purple);
+            animation: confettiFall 3s linear forwards;
+        }
+        
+        @keyframes confettiFall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="countdown">
+            <div class="countdown-title">⏰ Countdown to Your Birthday</div>
+            <div class="countdown-timer" id="countdown">--:--:--</div>
+        </div>
+        
+        <div class="day-header">
+            <div class="day-number">Day 13 of 14</div>
+            <div class="day-title">Tomorrow...</div>
+            <div class="day-subtitle">🎂</div>
+        </div>
+        
+        <div class="progress-bar-container">
+            <div class="progress-label">Progress: 13 / 14 days</div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+        
+        <div class="content-area">
+            <p>One more sleep! Tomorrow is YOUR BIRTHDAY, and I can't wait to celebrate you!!! Look at everything you've accomplished on this journey - you've unlocked amazing prizes and proven how amazing and special you are. Get ready for the grand finale tomorrow! 🎂✨</p>
+            
+            <div class="summary-section">
+                <div class="summary-title">🎊 YOUR JOURNEY SO FAR 🎊</div>
+                <p style="margin-bottom: 10px;">You've completed:</p>
+                <p>✓ 5 challenges</p>
+                <p>✓ 8 free bonuses</p>
+                <p>✓ Unlocked 13 amazing prizes</p>
+                <p style="margin-top: 15px; font-weight: 600; color: var(--purple);">Tomorrow, the final prize awaits...</p>
+            </div>
+        </div>
+        
+        <div class="prize-section">
+            <div class="prize-title">🎁 Birthday Eve Gift</div>
+            <div class="prize-subtitle">Special wallpaper or video message</div>
+            <img src="./images/day13-special.jpg" alt="Day 13 Special" class="prize-image" 
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <div style="display:none; padding: 20px; background: rgba(0,0,0,0.05); border-radius: 10px; margin-top: 10px;">
+                <p style="font-size: 12px; color: var(--text-light);">Upload image to: /images/day13-special.jpg</p>
+            </div>
+        </div>
+        
+        <div class="calendar-grid">
+            <div class="calendar-day completed">✓</div>
+            <div class="calendar-day completed">✓</div>
+            <div class="calendar-day completed">✓</div>
+            <div class="calendar-day completed">✓</div>
+            <div class="calendar-day completed">✓</div>
+            <div class="calendar-day completed">✓</div>
+            <div class="calendar-day completed">✓</div>
+            <div class="calendar-day completed">✓</div>
+            <div class="calendar-day completed">✓</div>
+            <div class="calendar-day completed">✓</div>
+            <div class="calendar-day completed">✓</div>
+            <div class="calendar-day completed">✓</div>
+            <div class="calendar-day completed">✓</div>
+            <div class="calendar-day current">13</div>
+        </div>
+    </div>
+    
+    <div class="confetti-container" id="confettiContainer"></div>
+    
+    <script>
+        const targetDate = new Date('2025-11-13T00:00:00-06:00');
+        
+        function updateCountdown() {
+            const now = new Date();
+            const diff = targetDate - now;
+            
+            if (diff <= 0) {
+                document.getElementById('countdown').textContent = '🎉 IT\'S YOUR BIRTHDAY! 🎉';
+                return;
+            }
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            if (days > 0) {
+                document.getElementById('countdown').textContent = 
+                    `${days} days, ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            } else {
+                document.getElementById('countdown').textContent = 
+                    `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            }
+        }
+        
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+        
+        setTimeout(() => {
+            createConfetti();
+        }, 500);
+        
+        function createConfetti() {
+            const container = document.getElementById('confettiContainer');
+            const colors = ['#E6D5F5', '#D4B5E8', '#7CB9E8', '#A7D3F0', '#FFB6C1'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = -10 + 'px';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
+                container.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 5000);
+            }
+        }
+    </script>
+</body>
+</html>
