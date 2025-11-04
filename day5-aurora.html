@@ -149,6 +149,20 @@
             font-size: 15px;
             opacity: 0;
             animation: fadeInUp 0.5s ease-out forwards;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        
+        .dream-item:hover {
+            background: rgba(212, 181, 232, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .dream-item.selected {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--blue) 100%);
+            color: white;
+            transform: scale(1.02);
         }
         
         .dream-item:nth-child(1) { animation-delay: 0.1s; }
@@ -158,6 +172,14 @@
         .dream-item:nth-child(5) { animation-delay: 0.5s; }
         .dream-item:nth-child(6) { animation-delay: 0.6s; }
         .dream-item:nth-child(7) { animation-delay: 0.7s; }
+        
+        .prompt-question {
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #6B3D7A;
+        }
         
         @keyframes fadeInUp {
             from {
@@ -171,11 +193,16 @@
         }
         
         .prize-section {
+            display: none;
             background: linear-gradient(135deg, rgba(212, 181, 232, 0.2) 0%, rgba(167, 211, 240, 0.2) 100%);
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 25px;
             text-align: center;
+        }
+        
+        .prize-section.revealed {
+            display: block;
             animation: bounceIn 0.6s ease-out;
         }
         
@@ -300,14 +327,15 @@
         
         <div class="content-area">
             <div class="content-title">Our Future Together ✨</div>
-            <ul class="dreams-list">
-                <li class="dream-item">Mission organization</li>
-                <li class="dream-item">Travel to different countries</li>
-                <li class="dream-item">Serving together in church</li>
-                <li class="dream-item">Relax at home together</li>
-                <li class="dream-item">Invite friends to our house</li>
-                <li class="dream-item">Worship together</li>
-                <li class="dream-item">Dance together</li>
+            <div class="prompt-question">Which ones of these do you want to do?</div>
+            <ul class="dreams-list" id="dreamsList">
+                <li class="dream-item" data-activity="Mission organization">Mission organization</li>
+                <li class="dream-item" data-activity="Travel to different countries">Travel to different countries</li>
+                <li class="dream-item" data-activity="Serving together in church">Serving together in church</li>
+                <li class="dream-item" data-activity="Relax at home together">Relax at home together</li>
+                <li class="dream-item" data-activity="Invite friends to our house">Invite friends to our house</li>
+                <li class="dream-item" data-activity="Worship together">Worship together</li>
+                <li class="dream-item" data-activity="Dance together">Dance together</li>
             </ul>
         </div>
         
@@ -370,10 +398,29 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
         
-        // Auto-reveal with confetti
-        setTimeout(() => {
-            createConfetti();
-        }, 500);
+        // Activity selection logic
+        const dreamsList = document.getElementById('dreamsList');
+        const dreamItems = dreamsList.querySelectorAll('.dream-item');
+        const prizeSection = document.querySelector('.prize-section');
+        let selectedCount = 0;
+        const totalActivities = dreamItems.length;
+        
+        dreamItems.forEach(item => {
+            item.addEventListener('click', function() {
+                if (!this.classList.contains('selected')) {
+                    this.classList.add('selected');
+                    selectedCount++;
+                    
+                    // Check if all activities are selected
+                    if (selectedCount === totalActivities) {
+                        // Reveal the vision board
+                        prizeSection.classList.add('revealed');
+                        // Trigger confetti animation
+                        createConfetti();
+                    }
+                }
+            });
+        });
         
         function createConfetti() {
             const container = document.getElementById('confettiContainer');
