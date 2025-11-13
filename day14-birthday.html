@@ -119,10 +119,23 @@
             justify-content: center;
             border: 2px solid var(--purple-light);
             transition: transform 0.2s;
+            text-decoration: none;
+            color: inherit;
         }
         
         .prize-card:hover {
             transform: scale(1.05);
+        }
+        
+        .prize-card-link {
+            text-decoration: none;
+            color: inherit;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
         
         .prize-card-image {
@@ -170,6 +183,102 @@
         .epic-button:disabled {
             opacity: 0.7;
             cursor: not-allowed;
+        }
+        
+        .confirmation-container {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(212, 181, 232, 0.3) 0%, rgba(167, 211, 240, 0.3) 100%);
+            border-radius: 20px;
+            margin-bottom: 25px;
+            animation: bounceIn 0.6s ease-out;
+        }
+        
+        .confirmation-container.show {
+            display: block;
+        }
+        
+        .confirmation-text {
+            font-size: 22px;
+            font-weight: 600;
+            color: #6B3D7A;
+            margin-bottom: 25px;
+        }
+        
+        .confirmation-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .confirm-button {
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .confirm-button:hover {
+            transform: scale(1.05);
+        }
+        
+        .confirm-yes {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--blue) 100%);
+            color: white;
+        }
+        
+        .confirm-no {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text-dark);
+            border: 2px solid var(--purple-light);
+        }
+        
+        .animation-stage {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(212, 181, 232, 0.2) 100%);
+            border-radius: 20px;
+            margin-bottom: 25px;
+            animation: bounceIn 0.6s ease-out;
+        }
+        
+        .animation-stage.show {
+            display: block;
+        }
+        
+        .animation-text {
+            font-size: 24px;
+            font-weight: 600;
+            color: #6B3D7A;
+            margin: 20px 0;
+            animation: pulseText 1.5s infinite;
+        }
+        
+        @keyframes pulseText {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+        
+        .spinner {
+            border: 4px solid rgba(212, 181, 232, 0.3);
+            border-top: 4px solid var(--purple);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         .bonus-reveal {
@@ -297,65 +406,74 @@
         <div class="prize-gallery">
             <div class="gallery-title">🏆 YOUR PRIZE COLLECTION 🏆</div>
             <div class="prize-grid">
-                <div class="prize-card">
+                <a href="https://beauhsiacreighton.github.io/dani-birthday/day1-sunrise.html" class="prize-card">
                     <img src="./images/day1-wallpaper.jpg" alt="Day 1 Wallpaper" class="prize-card-image" onerror="this.style.display='none';">
                     <div class="prize-card-title">Day 1 Wallpaper</div>
-                </div>
-                <div class="prize-card">
+                </a>
+                <a href="https://beauhsiacreighton.github.io/dani-birthday/day2-moonlight.html" class="prize-card">
                     <img src="./images/prize-phone-holder.jpg" alt="Phone Holder" class="prize-card-image" onerror="this.style.display='none';">
                     <div class="prize-card-title">Phone Holder</div>
-                </div>
-                <div class="prize-card">
+                </a>
+                <a href="https://beauhsiacreighton.github.io/dani-birthday/day3-starlight.html" class="prize-card">
                     <img src="./images/day3-wallpaper.jpg" alt="Day 3 Wallpaper" class="prize-card-image" onerror="this.style.display='none';">
                     <div class="prize-card-title">Day 3 Wallpaper</div>
-                </div>
-                <div class="prize-card">
+                </a>
+                <a href="https://beauhsiacreighton.github.io/dani-birthday/day4-twilight.html" class="prize-card">
                     <img src="./images/prize-magnesium.jpg" alt="Magnesium" class="prize-card-image" onerror="this.style.display='none';">
                     <div class="prize-card-title">Magnesium</div>
-                </div>
-                <div class="prize-card">
+                </a>
+                <a href="https://beauhsiacreighton.github.io/dani-birthday/day5-aurora.html" class="prize-card">
                     <img src="./images/day5-vision-board.jpg" alt="Vision Board" class="prize-card-image" onerror="this.style.display='none';">
                     <div class="prize-card-title">Vision Board</div>
-                </div>
-                <div class="prize-card">
+                </a>
+                <a href="https://beauhsiacreighton.github.io/dani-birthday/day6-nebula.html" class="prize-card">
                     <img src="./images/prize-exercise-bands.jpg" alt="Exercise Bands" class="prize-card-image" onerror="this.style.display='none';">
                     <div class="prize-card-title">Exercise Bands</div>
-                </div>
-                <div class="prize-card">
+                </a>
+                <a href="https://beauhsiacreighton.github.io/dani-birthday/day7-cosmos.html" class="prize-card">
                     <img src="./images/prize-laptop-stand.jpg" alt="Laptop Stand" class="prize-card-image" onerror="this.style.display='none';">
                     <div class="prize-card-title">Laptop Stand</div>
-                </div>
-                <div class="prize-card">
+                </a>
+                <a href="https://beauhsiacreighton.github.io/dani-birthday/day8-galaxy.html" class="prize-card">
                     <img src="./images/day8-wallpaper.jpg" alt="Day 8 Wallpaper" class="prize-card-image" onerror="this.style.display='none';">
                     <div class="prize-card-title">Day 8 Wallpaper</div>
-                </div>
-                <div class="prize-card">
+                </a>
+                <a href="https://beauhsiacreighton.github.io/dani-birthday/day9-horizon.html" class="prize-card">
                     <img src="./images/letter.jpg" alt="Love Letter" class="prize-card-image" onerror="this.style.display='none';">
                     <div class="prize-card-title">Love Letter</div>
-                </div>
-                <div class="prize-card">
+                </a>
+                <a href="https://beauhsiacreighton.github.io/dani-birthday/day10-eclipse.html" class="prize-card">
                     <img src="./images/prize-cushion.jpg" alt="Cushion" class="prize-card-image" onerror="this.style.display='none';">
                     <div class="prize-card-title">Cushion</div>
-                </div>
-                <div class="prize-card">
+                </a>
+                <a href="https://beauhsiacreighton.github.io/dani-birthday/day11-solstice.html" class="prize-card">
                     <img src="./images/prize-roses.jpg" alt="Roses" class="prize-card-image" onerror="this.style.display='none';">
                     <div class="prize-card-title">Roses</div>
-                </div>
-                <div class="prize-card">
+                </a>
+                <a href="https://beauhsiacreighton.github.io/dani-birthday/day12-zenith.html" class="prize-card">
                     <img src="./images/prize-roses-2.jpg" alt="Rose Delivery" class="prize-card-image" onerror="this.style.display='none';">
                     <div class="prize-card-title">Rose Delivery</div>
-                </div>
-                <div class="prize-card">
-                    <img src="./images/day13-special.jpg" alt="Day 13 Special" class="prize-card-image" onerror="this.style.display='none';">
-                    <div class="prize-card-title">Day 13 Special</div>
-                </div>
+                </a>
             </div>
         </div>
         
-        <button class="epic-button" id="epicButton" onclick="revealBonus()">
+        <button class="epic-button" id="epicButton" onclick="showConfirmation()">
             🎁 CLAIM YOUR FINAL<br>BIRTHDAY BONUS 🎁<br>
             <span style="font-size: 16px;">Click to reveal</span>
         </button>
+        
+        <div class="confirmation-container" id="confirmationContainer">
+            <div class="confirmation-text">Are you sure you're ready for this? 🎁✨</div>
+            <div class="confirmation-buttons">
+                <button class="confirm-button confirm-yes" onclick="confirmReveal()">Yes, I'm ready! 🎉</button>
+                <button class="confirm-button confirm-no" onclick="cancelReveal()">Not yet</button>
+            </div>
+        </div>
+        
+        <div class="animation-stage" id="animationStage">
+            <div class="spinner"></div>
+            <div class="animation-text" id="animationText">Preparing something special...</div>
+        </div>
         
         <div class="bonus-reveal" id="bonusReveal">
             <div class="bonus-amount">💰 1500 PESOS 💰</div>
@@ -406,18 +524,60 @@
             }
         }
         
-        function revealBonus() {
+        function showConfirmation() {
             const button = document.getElementById('epicButton');
+            const confirmation = document.getElementById('confirmationContainer');
+            
+            button.style.display = 'none';
+            confirmation.classList.add('show');
+        }
+        
+        function cancelReveal() {
+            const button = document.getElementById('epicButton');
+            const confirmation = document.getElementById('confirmationContainer');
+            
+            confirmation.classList.remove('show');
+            button.style.display = 'block';
+        }
+        
+        function confirmReveal() {
+            const confirmation = document.getElementById('confirmationContainer');
+            const animationStage = document.getElementById('animationStage');
+            const animationText = document.getElementById('animationText');
             const reveal = document.getElementById('bonusReveal');
             
-            button.disabled = true;
-            button.style.display = 'none';
+            confirmation.classList.remove('show');
+            animationStage.classList.add('show');
             
+            // Create particles immediately
             createParticles();
             
+            // Animation stages with different messages
+            const stages = [
+                { text: 'Preparing something special...', delay: 0 },
+                { text: 'Almost there... ✨', delay: 2000 },
+                { text: 'Just a moment more... 💜', delay: 4000 },
+                { text: 'This is going to be amazing... 🎁', delay: 6000 },
+                { text: 'Ready? Here it comes! 🎉', delay: 8000 }
+            ];
+            
+            stages.forEach((stage, index) => {
+                setTimeout(() => {
+                    animationText.textContent = stage.text;
+                    // Create more particles at each stage
+                    createParticles();
+                }, stage.delay);
+            });
+            
+            // Show final reveal after all animations
             setTimeout(() => {
+                animationStage.classList.remove('show');
                 reveal.classList.add('show');
-            }, 2000);
+                // Create final burst of particles
+                createParticles();
+                setTimeout(() => createParticles(), 500);
+                setTimeout(() => createParticles(), 1000);
+            }, 10000); // 10 seconds total delay
         }
         
         // Auto-start some particles on page load
